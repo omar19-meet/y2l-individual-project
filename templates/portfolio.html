@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Portfolio</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/temp.css">
+	<script src="/static/js/temp.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<style>
+		
+.wrapper {
+font-family: 'Raleway', sans-serif;
+    font-weight: lighter;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 350px;
+  grid-gap: 50px 50px;
+  margin: -1.25em 0 0 -1.25em;
+
+}
+* {
+  box-sizing: border-box;
+}
+
+.wr-div {
+  vertical-align: baseline;      
+  border-radius: 5px;
+  padding: 1em;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: transform .2s; /* Animation */
+}
+.wr-div h2{
+   display: inline-block;
+   background-color: white;
+  border-radius: 21px;
+}
+.wr-div p{
+   display: inline-block;
+   background-color: white;
+  border-radius: 21px;
+}
+.wraper .wr-div: hover {
+  border-radius: 10px;
+  background-color: yellow;
+  padding: 1em;
+  color: #d9480f;
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+
+.sea{
+
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: all 1s;
+    width: 50px;
+    height: 50px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+}
+
+input{
+  font-family: 'Raleway', sans-serif;
+    font-weight: lighter;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;;
+    height: 42.5px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    display: none;
+    font-size: 1em;
+    border-radius: 20px;
+    padding: 0 20px;
+    color: black;
+}
+
+.fa{
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 42.5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+}
+
+.sea:hover{
+    width: 200px;
+    cursor: pointer;
+}
+
+.sea:hover input{
+    display: block;
+}
+
+.sea:hover .fa{
+    background: #07051a;
+    color: white;
+}
+	</style>
+</head>
+<body>
+
+		<div class="img_icon row" >
+
+			<div class="wrapper">
+			{%for photo in photos%}
+			<div class="wr-div">			
+				<img src="{{photo.image}}" onclick="KlaviyoSubscribe.attachToModalForm('#k_id_modal',{delay_seconds: 0.01, hide_form_on_success: true, ignore_cookie: true, success_message: false});" style="width:30%; height:auto;">
+				<script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script>
+
+			</div>
+		</div>
+
+		</div>
+
+	<div class="klaviyo_modal" id="k_id_modal" style="display:none;">
+    <div class="klaviyo_inner">
+        <a href="#" class="klaviyo_close_modal klaviyo_header_close">×</a>
+        <div>
+        	<span>{{photo.name}}</span>
+        	<span>{{photo.timeuploaded}}</span>
+        	<br>
+        	<span>{{photo.op}}</span>
+        	<br>
+        	<img src="{{photo.image}}" style="width:320px; height: auto;">
+        	<br>
+        	<p>{{photo.description}}</p>
+        	<br>
+        	<p>{{photo.location}}</p>
+
+        </div>
+        <div class="error_message" ></div>
+        <div class="success_message" ></div>
+    </div>
+	</div>
+	{%endfor%}
+
+</body>
+</html>
