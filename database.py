@@ -29,9 +29,11 @@ def get_content_id(timeuploaded):
     return item.id 
 
 
-def change_content_image(img_id, img_url):
+def change_content_image(img_id, img_url, ratio=None):
     item = session.query(Photos).filter_by(id=img_id).first()
     item.image = img_url
+    if ratio:
+        item.imagesizeratio = ratio
     session.commit()
 
 
@@ -43,3 +45,11 @@ def touch(filename):
             os.utime(filename, None)
         except OSError:
             open(filename, 'a').close()
+
+def query_ratio():
+    photos=session.query(Photos).all()
+    print(photos)
+    photos.sort(key=(lambda x: x.imagesizeratio))
+    return photos
+
+

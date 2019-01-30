@@ -4,6 +4,8 @@ from flask import session as login_session
 from database import *
 from datetime import datetime
 
+from PIL import Image
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY']="string"
@@ -36,6 +38,8 @@ def upload():
 		location=request.form['location']
 		timeuploaded=datetime.utcnow()
 
+
+
 		add_content(name,op,image_name,description,location, timeuploaded)
 
 		img_id = get_content_id(timeuploaded)
@@ -50,18 +54,22 @@ def upload():
 		touch(unique_filename)
 		image_file.save(unique_filename)
 
-		change_content_image(img_id, img_url=actual_filename)
+		
 
+		with Image.open(unique_filename) as img:
+			width, height = img.size
+		
+		imagesizeratio = width/height
+
+		change_content_image(img_id, img_url=actual_filename, ratio=imagesizeratio)
 
 		return redirect(url_for('home'))
 
 @app.route('/portfolio', methods=['GET'])
 def portfolio():
-	photos=query_by_photos()
-	photos.reverse()
-	if len(photos) > 9:
-		photos = photos[0:8]
-	return render_template('portfolio.html', photos=photos)
+	photos=query_ratio()
+	return render_template('portfolio.html', photos=photos, photos_len = len(photos))
+
 
 
 if __name__ == '__main__':

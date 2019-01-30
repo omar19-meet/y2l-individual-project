@@ -16,7 +16,8 @@ class Photos(Base):
     description=Column(String)
     timeuploaded=Column(DateTime)
     location=Column(String)
+    imagesizeratio=Column(Float)
 
     def __repr__(self):
-        return "Name: {} \n Original Poster: {} \n Image: {} \n Description: {} \n Time of upload: {}".format(self.name,self.op,self.image,self.description,self.timeuploaded, self.location)
+        return "Name: {} \n Original Poster: {} \n Image: {} \n Description: {} \n Time of upload: {} \n Ratio:{} \n".format(self.name,self.op,self.image,self.description,self.timeuploaded, self.location, self.imagesizeratio)
 

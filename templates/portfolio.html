@@ -55,87 +55,48 @@ font-family: 'Raleway', sans-serif;
   transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
+.column {
+	float: left;
+	width: 33.33%;
+	padding: 5px;
 
-.sea{
-
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    transition: all 1s;
-    width: 50px;
-    height: 50px;
-    background: white;
-    box-sizing: border-box;
-    border-radius: 25px;
-    border: 4px solid white;
-    padding: 5px;
 }
 
-input{
-  font-family: 'Raleway', sans-serif;
-    font-weight: lighter;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;;
-    height: 42.5px;
-    line-height: 30px;
-    outline: 0;
-    border: 0;
-    display: none;
-    font-size: 1em;
-    border-radius: 20px;
-    padding: 0 20px;
-    color: black;
-}
 
-.fa{
-    box-sizing: border-box;
-    padding: 10px;
-    width: 42.5px;
-    height: 42.5px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 50%;
-    color: #07051a;
-    text-align: center;
-    font-size: 1.2em;
-    transition: all 1s;
-}
-
-.sea:hover{
-    width: 200px;
-    cursor: pointer;
-}
-
-.sea:hover input{
-    display: block;
-}
-
-.sea:hover .fa{
-    background: #07051a;
-    color: white;
-}
+.row::after {
+	content: "";
+	clear: both;
+	display: table;
+} 
 	</style>
 </head>
 <body>
-
-		<div class="img_icon row" >
-
-			<div class="wrapper">
-			{%for photo in photos%}
-			<div class="wr-div">			
-				<img src="{{photo.image}}" onclick="KlaviyoSubscribe.attachToModalForm('#k_id_modal',{delay_seconds: 0.01, hide_form_on_success: true, ignore_cookie: true, success_message: false});" style="width:30%; height:auto;">
-				<script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script>
-
+<nav class="pages-nav">
+    <div class="pages-nav__item"><a class="link link--page" href="{{url_for('upload')}}">Upload</a></div>
+    <div class="pages-nav__item"><a class="link link--page" href="{{url_for('portfolio')}}">View All photos</a></div>
+    <div class="pages-nav__item"><a class="link link--page" href="#page-manuals">Buy</a></div>
+      </nav>
+<!-- 		<div class="img_icon row" > -->
+			
+			<div class="row">
+			{%for p in range(photos_len) %}
+			{% if p % 3 == 0 and p != 0 %}
 			</div>
-		</div>
+			<div class="row">
+			{% endif %}
 
-		</div>
+			
+			<div class="column">
+				<img src="{{photos[p].image}}" onclick="KlaviyoSubscribe.attachToModalForm('#k_id_modal{{ photos[p].id }}',{delay_seconds: 0.01, hide_form_on_success: true, ignore_cookie: true, success_message: false});" style="width:100%; height:auto;">
+			</div>
 
-	<div class="klaviyo_modal" id="k_id_modal" style="display:none;">
+			
+			
+				{% endfor %}
+			</div>
+		
+	{%for photo in photos%}		
+	<div class="klaviyo_modal" id="k_id_modal{{ photo.id }}" style="display:none;">
     <div class="klaviyo_inner">
         <a href="#" class="klaviyo_close_modal klaviyo_header_close">×</a>
         <div>
@@ -157,5 +118,7 @@ input{
 	</div>
 	{%endfor%}
 
+
+<script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script>
 </body>
 </html>
